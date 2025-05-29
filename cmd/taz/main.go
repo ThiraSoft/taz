@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	key := flag.Uint("k", 200, "Clé (ex: 170)")
+	key := flag.Uint("k", 0xAA, "Clé (ex: 0xAA)")
 	flag.Parse()
 
 	if flag.NArg() != 1 {
@@ -23,7 +23,7 @@ func main() {
 	}
 
 	path := flag.Arg(0)
-	err := taz.Taz(path, byte(*key))
+	err := taz.TazFile(path, byte(*key))
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "Erreur:", err)
 	}
