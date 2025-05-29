@@ -1,0 +1,30 @@
+# Binaire compilé
+/taz
+
+# Répertoire de build ou cache Go
+/bin/
+/build/
+/dist/
+*.exe
+*.out
+
+# Modules Go
+go.sum
+
+# Fichiers temporaires de l’éditeur
+*.swp
+*.swo
+*~
+*.tmp
+
+# macOS
+.DS_Store
+
+# VSCode
+.vscode/
+
+# JetBrains IDEs
+.idea/
+
+# Neovim
+.netrwhist
