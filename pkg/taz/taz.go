@@ -1,20 +1,11 @@
-package main
+package taz
 
 import (
-	"flag"
-	"fmt"
 	"io"
 	"os"
 )
 
-func check(err error) {
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "Erreur:", err)
-		os.Exit(1)
-	}
-}
-
-func xorFile(path string, key byte) error {
+func Taz(path string, key byte) error {
 	f, err := os.OpenFile(path, os.O_RDWR, 0)
 	if err != nil {
 		return err
@@ -96,28 +87,4 @@ func xorFile(path string, key byte) error {
 	}
 
 	return nil
-}
-
-func Taz(path string, key byte) error {
-	return xorFile(path, key)
-}
-
-func main() {
-	key := flag.Uint("k", 200, "Clé (ex: 170)")
-	flag.Parse()
-
-	if flag.NArg() != 1 {
-		fmt.Fprintln(os.Stderr, "Usage : taz [-k clé] <fichier>")
-		os.Exit(1)
-	}
-
-	if *key > 255 {
-		fmt.Fprintln(os.Stderr, "Erreur : la clé doit être entre 0 et 255")
-		os.Exit(1)
-	}
-
-	path := flag.Arg(0)
-	check(xorFile(path, byte(*key)))
-
-	fmt.Println("File", path, "has been tazed !")
 }
