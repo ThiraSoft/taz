@@ -5,20 +5,29 @@ import (
 	"os"
 )
 
-func ReadUntazzedContent(path string, key byte) (string, error) {
+var DEFAULT_KEY byte = 0x2A // Clé par défaut pour le taz
+
+// SetKey permet de changer la clé par défaut utilisée pour le taz
+func SetKey(key byte) {
+	DEFAULT_KEY = key
+}
+
+// ReadTazzedContent lit le contenu d'un fichier taz et le déchiffre
+func ReadUntazzedContent(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return "", err
 	}
 
 	for i := range data {
-		data[i] ^= key
+		data[i] ^= DEFAULT_KEY
 	}
 
 	return string(data), nil
 }
 
-func TazFile(path string, key byte) error {
+// TazFile chiffre le contenu d'un fichier en utilisant la clé par défaut
+func TazFile(path string) error {
 	f, err := os.OpenFile(path, os.O_RDWR, 0)
 	if err != nil {
 		return err
@@ -69,7 +78,7 @@ func TazFile(path string, key byte) error {
 		n, err := f.Read(buf)
 		if n > 0 {
 			for i := 0; i < n; i++ {
-				buf[i] ^= key
+				buf[i] ^= DEFAULT_KEY
 			}
 			_, err = f.Seek(pos, io.SeekStart)
 			if err != nil {
