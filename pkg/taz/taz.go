@@ -5,7 +5,20 @@ import (
 	"os"
 )
 
-func Taz(path string, key byte) error {
+func ReadUntazzedContent(path string, key byte) (string, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+
+	for i := range data {
+		data[i] ^= key
+	}
+
+	return string(data), nil
+}
+
+func TazFile(path string, key byte) error {
 	f, err := os.OpenFile(path, os.O_RDWR, 0)
 	if err != nil {
 		return err
