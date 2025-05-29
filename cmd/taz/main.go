@@ -26,8 +26,5 @@ func main() {
 	err := taz.Taz(path, byte(*key))
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "Erreur:", err)
-		os.Exit(1)
 	}
-
-	fmt.Println("File", path, "has been tazed !")
 }
