@@ -98,6 +98,10 @@ func xorFile(path string, key byte) error {
 	return nil
 }
 
+func Taz(path string, key byte) error {
+	return xorFile(path, key)
+}
+
 func main() {
 	key := flag.Uint("k", 200, "Clé (ex: 170)")
 	flag.Parse()
